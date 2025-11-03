@@ -1,0 +1,31 @@
+/* uploaded:index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ตั้งค่า Global Font ให้เป็น Kanit */
+body {
+  margin: 0;
+  font-family: "Kanit", sans-serif; 
+  background-color: #f9fafb;
+}
+
+/* 🟢 เพิ่มโค้ดนี้เพื่อลบพื้นที่ว่างที่อาจจะเหลืออยู่เหนือ Navbar */
+#root {
+  /* ลบ margin หรือ padding ที่อาจมีมาจากเบราว์เซอร์หรือ Tailwind base */
+  margin: 0;
+  padding: 0; 
+  width: 100%; /* ทำให้เต็มความกว้าง */
+
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* ตั้งค่าให้ Kanit โหลดได้แม้ไม่มีเน็ต */
+@import url('[https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&display=swap](https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&display=swap)');
