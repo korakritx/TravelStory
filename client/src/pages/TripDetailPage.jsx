@@ -120,11 +120,17 @@ export default function TripDetailPage() {
 
         setTrip(data);
 
-        // ✅ เพิ่มยอดวิว +1 (อัปเดตค่าใน Supabase)
-        await supabase
-          .from('trips')
-          .update({ view_count: (data.view_count || 0) + 1 })
-          .eq('id', id);
+        // ✅ เพิ่มยอดวิว +1 (อัปเดตค่าใน Supabase และใน state ทันที)
+const newCount = (data.view_count || 0) + 1;
+
+await supabase
+  .from('trips')
+  .update({ view_count: newCount })
+  .eq('id', id);
+
+// ✅ อัปเดตใน state เพื่อให้ UI เปลี่ยนทันที
+setTrip((prev) => ({ ...prev, view_count: newCount }));
+
 
         // ✅ โหลดชื่อผู้ใช้
         const fetchedUsername = await fetchUsername(data.user_id);
