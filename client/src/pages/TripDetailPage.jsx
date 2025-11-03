@@ -1,4 +1,4 @@
-// ✅ src/pages/TripDetailPage.jsx (เพิ่มระบบยอดวิว)
+// ✅ src/pages/TripDetailPage.jsx (ยอดวิวขึ้นทันที)
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom"; 
 import Navbar from "../components/Navbar";
@@ -89,7 +89,7 @@ export default function TripDetailPage() {
     }
   };
 
-  // ✅ โหลดข้อมูลทริป + เพิ่มยอดวิว
+  // ✅ โหลดข้อมูลทริป + อัปเดตยอดวิวทันที
   useEffect(() => {
     if (showSuccessModal) return;
 
@@ -118,19 +118,18 @@ export default function TripDetailPage() {
         if (error) throw error;
         if (!data) throw new Error("ไม่พบข้อมูลทริป");
 
-        setTrip(data);
+        // ✅ เพิ่มยอดวิว +1 แล้วอัปเดตทั้ง Supabase และ state ทันที
+        const newCount = (data.view_count || 0) + 1;
 
-        // ✅ เพิ่มยอดวิว +1 (อัปเดตค่าใน Supabase และใน state ทันที)
-const newCount = (data.view_count || 0) + 1;
+        const { error: updateError } = await supabase
+          .from('trips')
+          .update({ view_count: newCount })
+          .eq('id', id);
 
-await supabase
-  .from('trips')
-  .update({ view_count: newCount })
-  .eq('id', id);
+        if (updateError) throw updateError;
 
-// ✅ อัปเดตใน state เพื่อให้ UI เปลี่ยนทันที
-setTrip((prev) => ({ ...prev, view_count: newCount }));
-
+        // ✅ ตั้งค่า trip พร้อมยอดวิวใหม่
+        setTrip({ ...data, view_count: newCount });
 
         // ✅ โหลดชื่อผู้ใช้
         const fetchedUsername = await fetchUsername(data.user_id);
