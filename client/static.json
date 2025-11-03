@@ -1,13 +1,7 @@
 {
-  "headers": {
-    "/**": {
-      "Cache-Control": "no-cache"
-    }
-  },
-  "routes": [
-    {
-      "src": "/.*",
-      "dest": "/index.html"
-    }
-  ]
+  "root": "dist",
+  "clean_urls": true,
+  "routes": {
+    "/**": "index.html"
+  }
 }
