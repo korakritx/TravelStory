@@ -86,7 +86,7 @@ export default function Navbar() {
         <Link to="/home" className="text-2xl font-extrabold text-green-700 flex items-center hover:text-green-800 transition">
              {/* 💡 Logo ที่โดดเด่นขึ้น */}
              <Globe className="w-7 h-7 mr-2 text-blue-500" /> 
-             TravelStory
+             TravelStorysss
         </Link>
 
         <div className="flex items-center space-x-4 md:space-x-8">
